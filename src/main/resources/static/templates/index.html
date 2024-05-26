@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<style>
+		body {
+			background: #dcdcdc;
+			margin-top: 20px;
+		}
+
+		.widget-26 {
+			color: #3c4142;
+			font-weight: 400;
+		}
+
+		.widget-26 tr:first-child td {
+			border: 0;
+		}
+
+		.widget-26 .widget-26-job-emp-img img {
+			width: 35px;
+			height: 35px;
+			border-radius: 50%;
+		}
+
+		.widget-26 .widget-26-job-title {
+			min-width: 200px;
+		}
+
+		.widget-26 .widget-26-job-title a {
+			font-weight: 400;
+			font-size: 0.875rem;
+			color: #3c4142;
+			line-height: 1.5;
+		}
+
+		.widget-26 .widget-26-job-title a:hover {
+			color: #68CBD7;
+			text-decoration: none;
+		}
+
+		.widget-26 .widget-26-job-title .employer-name {
+			margin: 0;
+			line-height: 1.5;
+			font-weight: 400;
+			color: #3c4142;
+			font-size: 0.8125rem;
+			color: #3c4142;
+		}
+
+		.widget-26 .widget-26-job-title .employer-name:hover {
+			color: #68CBD7;
+			text-decoration: none;
+		}
+
+		.widget-26 .widget-26-job-title .time {
+			font-size: 12px;
+			font-weight: 400;
+		}
+
+		.widget-26 .widget-26-job-info {
+			min-width: 100px;
+			font-weight: 400;
+		}
+
+		.widget-26 .widget-26-job-info p {
+			line-height: 1.5;
+			color: #3c4142;
+			font-size: 0.8125rem;
+		}
+
+		.widget-26 .widget-26-job-info .location {
+			color: #3c4142;
+		}
+
+		.widget-26 .widget-26-job-salary {
+			min-width: 70px;
+			font-weight: 400;
+			color: #3c4142;
+			font-size: 0.8125rem;
+		}
+
+		.widget-26 .widget-26-job-category {
+			padding: .5rem;
+			display: inline-flex;
+			white-space: nowrap;
+			border-radius: 15px;
+		}
+
+		.widget-26 .widget-26-job-category .indicator {
+			width: 13px;
+			height: 13px;
+			margin-right: .5rem;
+			float: left;
+			border-radius: 50%;
+		}
+
+		.widget-26 .widget-26-job-category span {
+			font-size: 0.8125rem;
+			color: #3c4142;
+			font-weight: 600;
+		}
+
+		.widget-26 .widget-26-job-starred svg {
+			width: 20px;
+			height: 20px;
+			color: #fd8b2c;
+		}
+
+		.widget-26 .widget-26-job-starred svg.starred {
+			fill: #fd8b2c;
+		}
+
+		.bg-soft-base {
+			background-color: #e1f5f7;
+		}
+
+		.bg-soft-warning {
+			background-color: #fff4e1;
+		}
+
+		.bg-soft-success {
+			background-color: #d1f6f2;
+		}
+
+		.bg-soft-danger {
+			background-color: #fedce0;
+		}
+
+		.bg-soft-info {
+			background-color: #d7efff;
+		}
+
+		.search-form {
+			width: 80%;
+			margin: 0 auto;
+			margin-top: 1rem;
+		}
+
+		.search-form input {
+			height: 100%;
+			background: transparent;
+			border: 0;
+			display: block;
+			width: 100%;
+			padding: 1rem;
+			height: 100%;
+			font-size: 1rem;
+		}
+
+		.search-form select {
+			background: transparent;
+			border: 0;
+			padding: 1rem;
+			height: 100%;
+			font-size: 1rem;
+		}
+
+		.search-form select:focus {
+			border: 0;
+		}
+
+		.search-form button {
+			height: 100%;
+			width: 100%;
+			font-size: 1rem;
+		}
+
+		.search-form button svg {
+			width: 24px;
+			height: 24px;
+		}
+
+		.search-body {
+			margin-bottom: 1.5rem;
+		}
+
+		.search-body .search-filters .filter-list {
+			margin-bottom: 1.3rem;
+		}
+
+		.search-body .search-filters .filter-list .title {
+			color: #3c4142;
+			margin-bottom: 1rem;
+		}
+
+		.search-body .search-filters .filter-list .filter-text {
+			color: #727686;
+		}
+
+		.search-body .search-result .result-header {
+			margin-bottom: 2rem;
+		}
+
+		.search-body .search-result .result-header .records {
+			color: #3c4142;
+		}
+
+		.search-body .search-result .result-header .result-actions {
+			text-align: right;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.search-body .search-result .result-header .result-actions .result-sorting {
+			display: flex;
+			align-items: center;
+		}
+
+		.search-body .search-result .result-header .result-actions .result-sorting span {
+			flex-shrink: 0;
+			font-size: 0.8125rem;
+		}
+
+		.search-body .search-result .result-header .result-actions .result-sorting select {
+			color: #68CBD7;
+		}
+
+		.search-body .search-result .result-header .result-actions .result-sorting select option {
+			color: #3c4142;
+		}
+
+		@media (min-width: 768px) and (max-width: 991.98px) {
+			.search-body .search-filters {
+				display: flex;
+			}
+
+			.search-body .search-filters .filter-list {
+				margin-right: 1rem;
+			}
+		}
+
+		.card-margin {
+			margin-bottom: 1.875rem;
+		}
+
+		@media (min-width: 992px) {
+			.col-lg-2 {
+				flex: 0 0 16.66667%;
+				max-width: 16.66667%;
+			}
+		}
+
+		.card-margin {
+			margin-bottom: 1.875rem;
+		}
+
+		.card {
+			border: 0;
+			box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+			-webkit-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+			-moz-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+			-ms-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+		}
+
+		.card {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			min-width: 0;
+			word-wrap: break-word;
+			background-color: #ffffff;
+			background-clip: border-box;
+			border: 1px solid #e6e4e9;
+			border-radius: 8px;
+		}
+
+		#overlay {
+			position: fixed;
+			top: 0;
+			z-index: 100;
+			width: 100%;
+			height: 100%;
+			display: none;
+			background: rgba(0, 0, 0, 0.3);
+		}
+
+		.cv-spinner {
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.spinner {
+			width: 40px;
+			height: 40px;
+			border: 4px #ddd solid;
+			border-top: 4px #2e93e6 solid;
+			border-radius: 50%;
+			animation: sp-anime 0.8s infinite linear;
+		}
+
+		@keyframes sp-anime {
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.is-hide {
+			display: none;
+		}
+
+		.loader {
+			width: 70px;
+			--b: 8px;
+			aspect-ratio: 1;
+			border-radius: 50%;
+			background: #514b82;
+			-webkit-mask:
+				repeating-conic-gradient(#0000 0deg, #000 1deg 70deg, #0000 71deg 90deg),
+				radial-gradient(farthest-side, #0000 calc(100% - var(--b) - 1px), #000 calc(100% - var(--b)));
+			-webkit-mask-composite: destination-in;
+			mask-composite: intersect;
+			animation: l5 1s infinite;
+		}
+
+		@keyframes l5 {
+			to {
+				transform: rotate(.5turn)
+			}
+		}
+
+		.line-1 {
+			position: relative;
+			top: 50%;
+			width: 24em;
+			margin: 0 auto;
+			border-right: 2px solid rgba(255, 255, 255, .75);
+			font-size: 180%;
+			text-align: center;
+			white-space: nowrap;
+			overflow: hidden;
+			transform: translateY(-50%);
+		}
+
+		.css-typing p {
+			border-right: .15em solid orange;
+			font-family: "Courier";
+			font-size: 10px;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		.css-typing p:nth-child(1) {
+			width: 7.3em;
+			-webkit-animation: type 2s steps(120, end);
+			animation: type 2s steps(120, end);
+			-webkit-animation-fill-mode: forwards;
+			animation-fill-mode: forwards;
+		}
+
+		.css-typing p:nth-child(2) {
+			width: 11.5em;
+			opacity: 0;
+			-webkit-animation: type2 2s steps(120, end);
+			animation: type2 2s steps(120, end);
+			-webkit-animation-delay: 2s;
+			animation-delay: 2s;
+			-webkit-animation-fill-mode: forwards;
+			animation-fill-mode: forwards;
+		}
+
+		.css-typing p:nth-child(3) {
+			width: 7.3em;
+			opacity: 0;
+			-webkit-animation: type3 5s steps(60, end), blink .5s step-end infinite alternate;
+			animation: type3 5s steps(60, end), blink .5s step-end infinite alternate;
+			-webkit-animation-delay: 4s;
+			animation-delay: 4s;
+			-webkit-animation-fill-mode: forwards;
+			animation-fill-mode: forwards;
+		}
+
+		@keyframes type {
+			0% {
+				width: 0;
+			}
+
+			99.9% {
+				border-right: .15em solid orange;
+			}
+
+			100% {
+				border: none;
+			}
+		}
+
+		@-webkit-keyframes type {
+			0% {
+				width: 0;
+			}
+
+			99.9% {
+				border-right: .15em solid orange;
+			}
+
+			100% {
+				border: none;
+			}
+		}
+
+		@keyframes type2 {
+			0% {
+				width: 0;
+			}
+
+			1% {
+				opacity: 1;
+			}
+
+			99.9% {
+				border-right: .15em solid orange;
+			}
+
+			100% {
+				opacity: 1;
+				border: none;
+			}
+		}
+
+		@-webkit-keyframes type2 {
+			0% {
+				width: 0;
+			}
+
+			1% {
+				opacity: 1;
+			}
+
+			99.9% {
+				border-right: .15em solid orange;
+			}
+
+			100% {
+				opacity: 1;
+				border: none;
+			}
+		}
+
+		@keyframes type3 {
+			0% {
+				width: 0;
+			}
+
+			1% {
+				opacity: 1;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		@-webkit-keyframes type3 {
+			0% {
+				width: 0;
+			}
+
+			1% {
+				opacity: 1;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		@keyframes blink {
+			50% {
+				border-color: transparent;
+			}
+		}
+
+		@-webkit-keyframes blink {
+			50% {
+				border-color: tranparent;
+			}
+		}
+
+		.typed-out {
+			overflow: hidden;
+			border-right: .15em solid orange;
+			white-space: nowrap;
+			animation:
+				typing 5s forwards;
+			font-size: 1.6rem;
+			width: 0;
+		}
+
+		@keyframes typing {
+			from {
+				width: 0
+			}
+
+			to {
+				width: 100%
+			}
+		}
+
+		.result {
+			white-space: pre-wrap;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="overlay">
+		<div class="cv-spinner">
+			<span class="loader"></span>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row" style="margin-top: 20vh;" />
+		<div class="col-lg-12 card-margin">
+			<div class="card search-form">
+				<div class="card-body p-0">
+					<form id="search-form" action="/ai/embedding" method="GET">
+						<div class="row">
+							<div class="col-sm-3">
+								<!-- Button trigger modal -->
+								<button type="button" class="btn btn-primary" data-toggle="modal"
+									data-target="#exampleModalCenter">
+									Upload
+								</button>
+							</div>
+							<div class="col-md-6">
+								<input type="text" placeholder="search or chat ..." class="form-control" id="search"
+									name="search">
+							</div>
+							<div class="col">
+								<button type="submit" class="btn btn-base" data-toggle="tooltip" data-placement="top"
+									title="Search vector database">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+										fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+										stroke-linejoin="round" class="feather feather-search">
+										<circle cx="11" cy="11" r="8"></circle>
+										<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+									</svg>
+								</button>
+							</div>
+							<div class="col">
+								<button id="btnChat" type="button" click="chat()" class="btn btn-base"
+									data-toggle="tooltip" data-placement="top" title="Chat">
+									<img src="/img/ai.png" height="30"></img>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="card card-margin">
+				<div class="card-body">
+					<div class="row search-body">
+						<div class="col-lg-12">
+							<div class="search-result">
+								<div class="result-header">
+									<div class="row">
+										<div class="col-lg-6">
+										</div>
+										<div class="col-lg-6">
+											<div class="result-actions">
+												<div class="result-views">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="ai-response" class="widget-26-job-info"
+									style="height: 40vh;overflow-y: auto;overflow-x: hidden;">
+
+								</div>
+								<div id="result-vector" class="result-body" th:if="${ not#lists.isEmpty(messages)}">
+									<div class="table-responsive">
+										<table class="table widget-26" id="tblresults">
+											<thead>
+												<th></th>
+												<th colspan="4">Content</th>
+												<th>Similarity</th>
+												<th>File</th>
+												<th>Ask AI to Summarize text</th>
+											</thead>
+											<tbody>
+												<tr th:each="message : ${messages}">
+													<td>
+														<div class="widget-26-job-emp-img">
+															<img src="/img/algorithm.png" alt="" />
+														</div>
+													</td>
+													<td colspan="4">
+														<div class="widget-26-job-info">
+															<p class="type m-0"><span th:id="${message.id}"
+																	class="result" th:text="${message.content}" /></p>
+														</div>
+													</td>
+													<td>
+														<div class="widget-26-job-info">
+															<p class="type m-0"><span th:text="${message.distance}" />
+															</p>
+														</div>
+													</td>
+													<td>
+														<div class="widget-26-job-category bg-soft-base">
+															<a th:href="@{/ai/file/{file}(file=${message.filename})}"
+																target="_blank"><span
+																	th:text="${message.filename}"></span></a>
+														</div>
+													</td>
+													<td>
+														<div class="widget-26-job-category bg-soft-base">
+															<a th:onclick="summarize([[${message.id}]])"
+																href="javascript:return;">summarize
+															</a>
+														</div>
+													</td>
+													<!--td>
+                                                <div class="widget-26-job-starred">
+                                                   <a href="#">
+                                                      <svg
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         width="24"
+                                                         height="24"
+                                                         viewBox="0 0 24 24"
+                                                         fill="none"
+                                                         stroke="currentColor"
+                                                         stroke-width="2"
+                                                         stroke-linecap="round"
+                                                         stroke-linejoin="round"
+                                                         class="feather feather-star"
+                                                         >
+                                                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                                      </svg>
+                                                   </a>
+                                                </div>
+                                                </td-->
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form id="search-form" action="/ai/embedding" method="POST">
+					<div class="modal-body">
+						<textarea name="document" rows="10" cols="50"
+							placeholder="write text to be added in the vector database as embedding"></textarea>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-primary"></input>
+					</div>
+				</form>
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Upload a .pdf file</h5>
+				</div>
+				<div class="modal-footer">
+					<input id="fileupload" type="file" name="fileupload" />
+					<button id="upload-button" onclick="uploadFile()" class="btn btn-primary" data-dismiss="modal">
+						Upload </button>
+					<!-- Ajax JavaScript File Upload to Spring Boot Logic -->
+					<script>
+
+						var txt = "";
+						var pid = "";
+						var i = 0;
+						var speed = 20;
+
+						function typeWriter() {
+							if (i < txt.length) {
+								document.getElementById(pid).innerHTML += txt.charAt(i);
+								i++;
+								scrollToBottom();
+								setTimeout(typeWriter, speed);
+							}
+						}
+
+
+						async function summarize(id) {
+							let formData = new FormData();
+							loading = setTimeout("$('#overlay').fadeIn(300);", 700);
+							formData.append("text", $("#" + id).text());
+							let response = await fetch('/api/v1/ai/summarize', {
+								method: "POST",
+								body: formData
+							}).then(function (response) {
+								return response.text();
+							}).then(function (response) {
+								clearTimeout(loading);
+								setTimeout(function () {
+									$("#overlay").fadeOut(300);
+								}, 500);
+
+								alert(response);
+								
+							}).catch(function (error) {
+								console.log(error);
+								alert(error);
+								return;
+							});
+						}
+
+						async function uploadFile() {
+							let formData = new FormData();
+							var file = fileupload.files[0];
+							formData.append("file", file);
+							loading = setTimeout("$('#overlay').fadeIn(300);", 700);
+							let response = await fetch('/ai/upload', {
+								method: "POST",
+								body: formData
+							}).then(function (response) {
+								return response.text();
+							}).then(function (response) {
+								clearTimeout(loading);
+								setTimeout(function () {
+									$("#overlay").fadeOut(300);
+								}, 500);
+
+								if (response.endsWith(".png") || response.endsWith(".jpg") || response.endsWith(".jpeg")) {
+									$('#ai-response').append(
+										" <br/>"
+										+ "<img src='/ai/file/" + response + "' height='250'/>"
+										+ "<br/>");
+								}
+								else {
+									$('#ai-response').append("<br/>" < span > " + response + </span>");
+								}
+
+								$("#idfile").val(response);
+							}).catch(function (error) {
+								console.log(error);
+								alert(error);
+								return;
+							});;
+						}
+
+
+						async function chat() {
+							let formData = new FormData();
+							loading = setTimeout("$('#overlay').fadeIn(300);", 700);
+
+							var promptMessage = $("#search").val();
+							var filename = document.getElementById("idfile").value;
+
+							$('#ai-response').append('<br/><br/>');
+							$('#ai-response').append(
+								'  <div class="row" style="margin-left: 70px;" />'
+								+ '    <img src="/img/user.png" height="30" />'
+								+ '    <span>' + promptMessage + '</span>'
+								+ '  </div>');
+
+							formData.append("promptMessage", promptMessage);
+							formData.append("filename", filename);
+
+							let response = await fetch('/api/v1/ai/generate', {
+								method: "POST",
+								body: formData
+							}).then(function (response) {
+								return response.text();
+							}).then(function (string) {
+								clearTimeout(loading);
+								setTimeout(function () {
+									$("#overlay").fadeOut(300);
+								}, 500);
+
+
+								var random_uuid = uuidv4();
+								pid = random_uuid;
+
+								var obj = jQuery.parseJSON(string);
+
+								var textresult = unescapeEmoji(obj.message);
+
+								var x = document.getElementById("ai-response");
+								if (x.style.display === "none") {
+									x.style.display = "block";
+								} else {
+									x.style.display = "none";
+								}
+
+								var t = document.getElementById("result-vector");
+								if (t != null)
+									t.style.display = "none";
+
+								$('#ai-response').append('<br/><br/>');
+								$('#ai-response').append(
+									'<div class="row" style="margin-left: 70px;" />'
+									+ '    <img src="/img/ai.png" height="30" />'
+									+ '    <span id="' + random_uuid + '"></span>'
+									+ '</div>');
+
+								txt = textresult;
+								i = 0;
+								typeWriter();
+
+							}).catch(function (error) {
+								console.log(error);
+								alert(error);
+								return;
+							});
+
+						}
+
+						function unescapeEmoji(text) {
+							return text.replace(/\\u[\dA-F]{4}/gi, function (match) {
+								return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
+							});
+						}
+
+						function uuidv4() {
+							return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+								.replace(/[xy]/g, function (c) {
+									const r = Math.random() * 16 | 0,
+										v = c == 'x' ? r : (r & 0x3 | 0x8);
+									return v.toString(16);
+								});
+						}
+
+
+
+						// Get the scrollable div element
+						let scrollableDiv = document.getElementById('ai-response');
+
+						// Function to scroll to the bottom of the div
+						function scrollToBottom() {
+							scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
+						}
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" id="idfile" name="idfile" value="">
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css'>
+	<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js'></script>
+	<script>
+		$(document).ready(function () {
+			var x = document.getElementById("ai-response");
+			x.style.display = "none";
+			var t = document.getElementById("result-vector");
+			if (t != null)
+				t.style.display = "block";
+
+			document.getElementById('btnChat').addEventListener('click',
+				function (event) {
+					event.preventDefault();
+					chat();
+				});
+		});         
+	</script>
+	<a href="https://www.flaticon.com/free-icons/machine-learning" title="machine learning icons">Machine learning icons created by Triangle Squad - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/machine-learning" title="machine learning icons">Machine learning icons created by alfanz - Flaticon</a>
+</body>
+
+</html>
