@@ -8,7 +8,7 @@
 User Interface for chatting with AI Ollama models and creating embeddings of text
   
 
-![enter image description here](/img/Screenshot1.png)
+![enter image description here](blob/main/src/main/resources/static/img/Screenshot1.png)
 
   
 
