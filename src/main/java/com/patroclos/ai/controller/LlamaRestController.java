@@ -92,11 +92,4 @@ public class LlamaRestController {
 		return ResponseEntity.status(HttpStatus.OK).body(aiResponse);
 	}
 
-	@GetMapping("generate/joke/{topic}")
-	public ResponseEntity<LlamaResponse> generateJoke(@PathVariable String topic) {
-		final LlamaResponse aiResponse = llamaAiService.generateJoke(topic);
-
-		return ResponseEntity.status(HttpStatus.OK).body(aiResponse);
-	}
-
 }
