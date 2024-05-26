@@ -8,7 +8,7 @@
 User Interface for chatting with AI Ollama models and creating embeddings of text
   
 
-![enter image description here](blob/main/src/main/resources/static/img/Screenshot1.png)
+![enter image description here](src/main/resources/static/img/Screenshot1.png)
 
   
 
@@ -37,7 +37,6 @@ To run a Postgres Vector database run the following docker container
 
 https://postgresml.org/docs/resources/developer-docs/quick-start-with-docker
 
-  
 
 ## Requirements
 
@@ -63,10 +62,14 @@ For building and running the application you need:
   
 ## Running the app
 
-Step 1. Run Docker Compose file
+PostgresML container must be running as per above instructions
 
-*from the root directory run command*
+Run Docker Compose file *from the root directory run command*
 
-docker compose up
+    docker compose up
+
+Inside *Ollama* container's terminal,  run command to pull llama2 LLM
+
+    ollama run llama2
   
 Go to http://localhost:8080/ai/
