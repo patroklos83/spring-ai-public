@@ -46,8 +46,6 @@ public class AppConfiguration {
 				.withMetadataMode(MetadataMode.EMBED) // Document metadata mode.
 				.build());
 
-		//embeddingClient.afterPropertiesSet(); // initialize the jdbc template and database.
-
 		return embeddingClient;
 	}
 
